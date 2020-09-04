@@ -79,6 +79,7 @@ namespace HelloWorld
                     Console.WriteLine("You dealt " + _playerDamage + " damage.");
                     Console.Write("> ");
                     Console.ReadKey();
+                    Console.WriteLine();
                 }
                 //If the player decides to defend the enemy just takes their turn. However this time the block attack function is
                 //called instead of simply decrementing the health by the enemy's attack value.
@@ -89,7 +90,7 @@ namespace HelloWorld
                     Console.Write("> ");
                     Console.ReadKey();
                     turnCount++;
-                    Console.Clear();
+                    Console.WriteLine();
                 }
                 Console.Clear();
                 //After the player attacks, the enemy takes its turn. Since the player decided not to defend, the block attack function is not called.
@@ -98,7 +99,7 @@ namespace HelloWorld
                 Console.Write("> ");
                 Console.ReadKey();
                 turnCount++;
-                
+                Console.WriteLine();
             }
             //Return whether or not our player died
             return _playerHealth != 0;
@@ -137,17 +138,19 @@ namespace HelloWorld
             //Loop until the player enters a valid input
             while (input != '1' && input != '2')
             {
+                Console.WriteLine();
                 Console.WriteLine("1." + option1);
                 Console.WriteLine("2." + option2);
                 Console.Write("> ");
                 input = Console.ReadKey().KeyChar;
+                Console.WriteLine();
             }
         }
 
         //Prints the stats given in the parameter list to the console
         void PrintStats(string name, int health, int damage, int defense)
         {
-            Console.WriteLine("/n" + name);
+            Console.WriteLine("\n" + name);
             Console.WriteLine("Health: " + health);
             Console.WriteLine("Damage: " + damage);
             Console.WriteLine("Defense: " + defense);
