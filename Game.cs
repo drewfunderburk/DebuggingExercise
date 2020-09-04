@@ -18,7 +18,7 @@ namespace HelloWorld
             Start();
             while(_gameOver == false)
             {
-                Update();
+                LodisWithAT();
             }
             End();
         }
@@ -261,7 +261,7 @@ namespace HelloWorld
         }
 
         //Repeated until the game ends
-        public void Update()
+        public void LodisWithAT()
         {
             ClimbLadder(0);   
         }
