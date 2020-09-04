@@ -72,11 +72,12 @@ namespace HelloWorld
                 //Get input from the player
                 char input;
                 GetInput(out input, "Attack", "Defend");
+                int damage;
                 //If input is 1, the player wants to attack. By default the enemy blocks any incoming attack
                 if(input == '1')
                 {
-                    BlockAttack(ref enemyHealth, _playerDamage, enemyDefense);
-                    Console.WriteLine("You dealt " + _playerDamage + " damage.");
+                    BlockAttack(ref enemyHealth, _playerDamage, enemyDefense, out damage);
+                    Console.WriteLine("You dealt " + damage + " damage.");
                     Console.Write("> ");
                     Console.ReadKey();
                     Console.WriteLine();
@@ -92,8 +93,8 @@ namespace HelloWorld
                 //called instead of simply decrementing the health by the enemy's attack value.
                 else
                 {
-                    BlockAttack(ref _playerHealth, enemyAttack, _playerDefense);
-                    Console.WriteLine(enemyName + " dealt " + enemyAttack + " damage.");
+                    BlockAttack(ref _playerHealth, enemyAttack, _playerDefense, out damage);
+                    Console.WriteLine(enemyName + " dealt " + damage + " damage.");
                     Console.Write("> ");
                     Console.ReadKey();
                     turnCount++;
@@ -106,9 +107,9 @@ namespace HelloWorld
 
         }
         //Decrements the health of a character. The attack value is subtracted by that character's defense
-        void BlockAttack(ref int opponentHealth, int attackVal, int opponentDefense)
+        void BlockAttack(ref int opponentHealth, int attackVal, int opponentDefense, out int damage)
         {
-            int damage = attackVal - opponentDefense;
+            damage = attackVal - opponentDefense;
             if(damage < 0)
             {
                 damage = 0;
