@@ -63,9 +63,9 @@ namespace HelloWorld
             }
 
             //Loops until the player or the enemy is dead
-            while(_playerHealth >= 0 || enemyHealth >= 0)
+            while(_playerHealth > 0 && enemyHealth > 0)
             {
-                //Displays the stats for both charactersa to the screen before the player takes their turn
+                //Displays the stats for both characters to the screen before the player takes their turn
                 PrintStats(_playerName, _playerHealth, _playerDamage, _playerDefense);
                 PrintStats(enemyName, enemyHealth, enemyAttack, enemyDefense);
 
@@ -75,7 +75,7 @@ namespace HelloWorld
                 //If input is 1, the player wants to attack. By default the enemy blocks any incoming attack
                 if(input == '1')
                 {
-                    BlockAttack(enemyHealth, _playerDamage, enemyDefense);
+                    BlockAttack(ref enemyHealth, _playerDamage, enemyDefense);
                     Console.WriteLine("You dealt " + _playerDamage + " damage.");
                     Console.Write("> ");
                     Console.ReadKey();
@@ -84,7 +84,7 @@ namespace HelloWorld
                 //called instead of simply decrementing the health by the enemy's attack value.
                 else
                 {
-                    BlockAttack(_playerHealth, enemyAttack, _playerDefense);
+                    BlockAttack(ref _playerHealth, enemyAttack, _playerDefense);
                     Console.WriteLine(enemyName + " dealt " + enemyAttack + " damage.");
                     Console.Write("> ");
                     Console.ReadKey();
@@ -105,7 +105,7 @@ namespace HelloWorld
 
         }
         //Decrements the health of a character. The attack value is subtracted by that character's defense
-        void BlockAttack(int opponentHealth, int attackVal, int opponentDefense)
+        void BlockAttack(ref int opponentHealth, int attackVal, int opponentDefense)
         {
             int damage = attackVal - opponentDefense;
             if(damage < 0)
@@ -135,11 +135,13 @@ namespace HelloWorld
             //Initialize input
             input = ' ';
             //Loop until the player enters a valid input
-            while(input != '1' && input != '2')
+            while (input != '1' && input != '2')
+            {
                 Console.WriteLine("1." + option1);
                 Console.WriteLine("2." + option2);
                 Console.Write("> ");
                 input = Console.ReadKey().KeyChar;
+            }
         }
 
         //Prints the stats given in the parameter list to the console
@@ -183,7 +185,7 @@ namespace HelloWorld
             if(StartBattle(roomNum, ref turnCount))
             {
                 LevelUp(turnCount);
-                ClimbLadder(roomNum++);
+                ClimbLadder(roomNum + 1);
             }
             _gameOver = true;
 
