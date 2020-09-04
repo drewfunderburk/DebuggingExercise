@@ -80,6 +80,13 @@ namespace HelloWorld
                     Console.Write("> ");
                     Console.ReadKey();
                     Console.WriteLine();
+
+                    //After the player attacks, the enemy takes its turn. Since the player decided not to defend, the block attack function is not called.
+                    _playerHealth -= enemyAttack;
+                    Console.WriteLine(enemyName + " dealt " + enemyAttack + " damage.");
+                    Console.Write("> ");
+                    Console.ReadKey();
+                    turnCount++;
                 }
                 //If the player decides to defend the enemy just takes their turn. However this time the block attack function is
                 //called instead of simply decrementing the health by the enemy's attack value.
@@ -93,13 +100,6 @@ namespace HelloWorld
                     Console.WriteLine();
                 }
                 Console.Clear();
-                //After the player attacks, the enemy takes its turn. Since the player decided not to defend, the block attack function is not called.
-                _playerHealth -= enemyAttack;
-                Console.WriteLine(enemyName + " dealt " + enemyAttack + " damage.");
-                Console.Write("> ");
-                Console.ReadKey();
-                turnCount++;
-                Console.WriteLine();
             }
             //Return whether or not our player died
             return _playerHealth != 0;
