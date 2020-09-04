@@ -15,12 +15,12 @@ namespace HelloWorld
         //Run the game
         public void Run()
         {
-
+            Start();
             while(_gameOver == false)
             {
-
+                Update();
             }
-
+            End();
         }
         //This function handles the battles for our ladder. roomNum is used to update the our opponent to be the enemy in the current room. 
         //turnCount is used to keep track of how many turns it took the player to beat the enemy
