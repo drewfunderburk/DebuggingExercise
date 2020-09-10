@@ -117,7 +117,7 @@ namespace HelloWorld
             opponentHealth -= damage;
         }
         //Scales up the player's stats based on the amount of turns it took in the last battle
-        void LevelUp(int turnCount)
+        void UpgradeStats(int turnCount)
         {
             //Subtract the amount of turns from our maximum level scale to get our current level scale
             int scale = levelScaleMax - turnCount;
@@ -129,10 +129,29 @@ namespace HelloWorld
             _playerDamage *= scale;
             _playerDefense *= scale;
         }
+        void UpgradeStats(int turnCount, char stat)
+        {
+            //Subtract the amount of turns from our maximum level scale to get our current level scale
+            int scale = levelScaleMax - turnCount;
+            if (scale <= 0)
+            {
+                scale = 1;
+            }
+            switch (stat)
+            {
+                case '1':
+                    _playerHealth += 10 * scale;
+                    break;
+                case '2':
+                    _playerDamage *= scale;
+                    break;
+            }
+            _playerDefense *= scale;
+        }
         //Gets input from the player
         //Out's the char variable given. This variables stores the player's input choice.
         //The parameters option1 and option 2 displays the players current chpices to the screen
-        void GetInput(out char input,string option1, string option2)
+        void GetInput(out char input, string option1, string option2)
         {
             //Initialize input
             input = ' ';
@@ -160,6 +179,7 @@ namespace HelloWorld
         //This is used to progress through our game. A recursive function meant to switch the rooms and start the battles inside them.
         void ClimbLadder(int roomNum)
         {
+            Console.Clear();
             //Displays context based on which room the player is in
             switch (roomNum)
             {
@@ -188,7 +208,14 @@ namespace HelloWorld
             //Starts a battle. If the player survived the battle, level them up and then proceed to the next room.
             if(StartBattle(roomNum, ref turnCount))
             {
-                LevelUp(turnCount);
+                Console.Clear();
+                Console.WriteLine("Level Up!");
+                PrintStats(_playerName, _playerHealth, _playerDamage, _playerDefense);
+                Console.WriteLine();
+                Console.WriteLine("Which stat would you like to upgrade?");
+                char input;
+                GetInput(out input, "Health", "Damage");
+                UpgradeStats(turnCount, input);
                 ClimbLadder(roomNum + 1);
             }
             _gameOver = true;
